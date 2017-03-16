@@ -60,5 +60,29 @@ recipeCount = parseInt(localStorage.getItem('recipe count'));
 		}
 	});
 
+	function callAPI () {
+			var URL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?limitLicense=false&" +cuisine+ "&" + restriction + "&" + allergies;
+	console.log(URL);
+	$.ajax({
+            url: URL,
+            type: 'GET',
+            dataType: 'json',
+            headers: {
+                'X-Mashape-Key': 'ZdKhTNFHHDmshquH7By5lOHgNXebp1m1xmfjsnQzYt1dr9fosl',
+                'Accept': 'application/json'
+            },
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+              console.log(result);
+              console.log(result.results[0].title);
+
+               // $("#food-view").text(result[0].name);
+            },
+            error: function (error) {
+                
+            }
+        });
+};
+
 //end document ready, end script
 });
