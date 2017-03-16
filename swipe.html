@@ -28,6 +28,27 @@
 </head>
 
 <body>
+	<!-- page header - should be the same for all pages -->
+	<header class="jumbotron container">
+		<h1> Tender </h1>
+		<p id="subtitle"> Find the recipe of your dreams! </p>
+	</header> 
+
+	<div class="row">
+		<div class="container">
+		
+			<button class="btn btn-danger" onclick="recipeNo()"><span class="glyphicon glyphicon-thumbs-down"></span> Ick!</button>
+
+			<div id="current-recipe" style="display: inline-block">
+				<!-- this space will contain recipe image and name called through API -->
+				<!-- placeholder image / name -->
+				<img src="http://www.sluniverse.com/200.jpg">
+			</div>
+
+			<button class="btn btn-success" onclick="recipeYes()"><span class="glyphicon glyphicon-thumbs-up"></span> Yum!</button>
+
+		</div>
+	</div>
 
 
 

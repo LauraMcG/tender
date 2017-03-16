@@ -28,7 +28,82 @@
 </head>
 
 <body>
+<div class= "container">
+    <div class="row">
+        <div class="jumbotron">
+            <h1>hey, baby.</h1>
+            <h3>Before we find the recipie of your dreams, I want to get to know you better.</h3>
+        </div>
+        <!-- start survey -->
+        <form class="form-horizontal">
 
+        <!-- number of recipies to select -->
+          <div class="form-group">
+            <label for="recipie-count" class="col-sm-3 control-label">How many recipies?</label>
+            <div class="col-sm-9">
+              <select class="form-control" id="recipie-count">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+              </select>
+            </div>
+          </div>
+
+        <!-- dietary restrictions  / diet -->
+          <div class="form-group">
+            <label for="restriction" class="col-sm-3 control-label">Dietary restrictions?</label>
+            <div class="col-sm-9">
+             <label class="checkbox-inline">
+                  <input type="checkbox" id="restriction" value="lacto vegetarian">
+                  Lacto Vegetarian
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" id="restriction" value="ovo vegetarian">
+                  Ovo Vegetarian
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" id="restriction" value="paleo">
+                  Paleo
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" id="restriction" value="pescatarian">
+                  Pescatarian
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" id="restriction" value="vegan">
+                  Vegan
+                </label>
+                <label class="checkbox-inline">
+                  <input type="checkbox" id="restriction" value="vegetarian">
+                  Vegetarian
+                </label>
+            </div>
+          </div>
+
+
+         <!-- allergies / excludeingredients -->
+          <div class="form-group">
+            <label for="allergies" class="col-sm-3 control-label">Any allergies?</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="allergies" placeholder="Type multiple allergies with commas, ex: 'peanuts, pizza' ">
+            </div>
+          </div>
+
+
+        <!-- submit button -->
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default" id="submit-data">Let's eat!</button>
+            </div>
+          </div>
+        </form>
+
+
+    <!-- /main row div -->
+    </div>
+<!-- /container -->
+</div>
 
 
 </body>
