@@ -1,7 +1,7 @@
 // GLOBAL VERIABLES //
 
 var allergies;
-var recipeCount = 3;
+var recipeCount;
 var restrictions;
 var comparisonArray = [];
 
@@ -28,6 +28,7 @@ $(document).ready(function () {
 
 	});
 
+recipeCount = parseInt(localStorage.getItem('recipe count'));
 
 		for (i = 1; i <= recipeCount; i++) {
 			// placeholder images, will be replaced with data from API
@@ -43,6 +44,8 @@ $(document).ready(function () {
 	});
 
 	$('.yes').on('click', function(){
+		console.log(recipeCount);
+
 		console.log('Either continues "swiping" or goes to the comparison page');
 		// Store approved recipe into comparison array.
 		comparisonArray.push('test');
