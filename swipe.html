@@ -22,8 +22,7 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
 
 <!-- Link to javascript files -->
-<script src="assets/michael.js"></script>
-<script src="assets/laura.js"></script>
+<script src="assets/app.js"></script>
 
 </head>
 
@@ -36,8 +35,11 @@
 
 	<div class="row">
 		<div class="container">
+
+		<!-- onclick="recipeNo()" -->
 		
-			<button class="btn btn-danger" onclick="recipeNo()"><span class="glyphicon glyphicon-thumbs-down"></span> Ick!</button>
+
+			<button class="btn btn-danger no"><span class="glyphicon glyphicon-thumbs-down"></span> Ick!</button>
 
 			<div id="current-recipe" style="display: inline-block">
 				<!-- this space will contain recipe image and name called through API -->
@@ -45,7 +47,7 @@
 				<img src="http://www.sluniverse.com/200.jpg">
 			</div>
 
-			<button class="btn btn-success" onclick="recipeYes()"><span class="glyphicon glyphicon-thumbs-up"></span> Yum!</button>
+			<button class="btn btn-success yes"><span class="glyphicon glyphicon-thumbs-up"></span> Yum!</button>
 
 		</div>
 	</div>
