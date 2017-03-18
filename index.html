@@ -50,53 +50,84 @@
             </div>
           </div>
 
-          <!-- cuisine -->
+          <!-- cuisine : checkboxes later -->
+
           <div class="form-group">
-            <label for="cuisine" class="col-sm-3 control-label">Type of cuisine</label>
+            <label for="cuisine" class="col-sm-3 control-label">What kind of cuisine?</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="cuisine" placeholder="Type multiple cusines with commas, ex: 'Chinese, Italian' ">
+              <select class="form-control" id="cuisine">
+                  <!-- <option></option> -->
+                  <option>African</option>
+                  <option>American</option>
+                  <option>British</option>
+                  <option>Cajun</option>
+                  <option>Chinese</option>
+                  <option>Caribbean</option>
+                  <option>Eastern European</option>
+                  <option>French</option>
+                  <option>German</option>
+                  <option>Greek</option>
+                  <option>Indian</option>
+                  <option>Irish</option>
+                  <option>Italian</option>
+                  <option>Japanese</option>
+                  <option>Jewish</option>
+                  <option>Korean</option>
+                  <option>Latin American</option>
+                  <option>Mexican</option>
+                  <option>Middle Eastern</option>
+                  <option>Nordic</option>
+                  <option>Southern</option>
+                  <option>Spanish</option>
+                  <option>Thai</option>
+                  <option>Vietnamese</option>
+              </select>
             </div>
           </div>
 
-          <!-- dietary restrictions  / diet -->
-          <div class="form-group">
-            <label for="restriction" class="col-sm-3 control-label">Dietary restrictions?</label>
-            <div class="col-sm-9">
+          <!-- dietary restrictions -->
 
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="restriction" value="Pescetarian"> Pescetarian
-              </label>
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="restriction" value="Lactovegetarian"> Lactovegetarian
-              </label>
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="restriction" value="Ovovegetarian"> Ovovegetarian
-              </label>
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="restriction" value="Vegan"> Vegan
-              </label>
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="restriction" value="Vegetarian"> Vegetarian
-              </label>
-            </div>
+          <div class="form-group">
+            <label for="restriction" class="col-sm-3 control-label">Any restrictions?</label>
+            <div class="col-sm-9">
+              <select class="form-control" id="restriction">
+                  <!-- <option></option> -->
+                  <option>Pescetarian</option>
+                  <option>Lactovegetarian</option>
+                  <option>Ovovegetarian</option>
+                  <option>Vegan</option>
+                  <option>Vegetarian</option>
+              </select>
             </div>
           </div>
 
-
-         <!-- allergies / excludeingredients -->
+          <!-- allergies -->
           <div class="form-group">
-            <label for="allergies" class="col-sm-3 control-label">Any allergies?</label>
+            <label for="allergies" class="col-sm-3 control-label">What about allergies?</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="allergies" placeholder="Type multiple allergies with commas, ex: 'peanuts, pizza' ">
+              <select class="form-control" id="allergies">
+                  <!-- <option></option> -->
+                  <option>Dairy</option>
+                  <option>Egg</option>
+                  <option>Gluten</option>
+                  <option>Peanut</option>
+                  <option>Sesame</option>
+                  <option>Seafood</option>
+                  <option>Shellfish</option>
+                  <option>Soy</option>
+                  <option>Sulfite</option>
+                  <option>Treenut</option>
+                  <option>Wheat</option>
+              </select>
             </div>
           </div>
 
 
         <!-- submit button -->
+        <!-- -->
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-default" id="submit-data" onclick="location.href='swipe.html'">Let's eat!</button>
+              <button type="submit" class="btn btn-default" id="submit-data" >Let's eat!</button>
             </div>
           </div>
         </form>

@@ -2,37 +2,56 @@
 
 var allergies;
 var recipeCount;
-var restrictions;
+var restriction;
 var comparisonArray = [];
+var cuisine;
 
 //jQuery
 $(document).ready(function () {
 
-	//collecting info on 
+	//collecting info when the survey is submitted
 	$('#submit-data').on('click', function(event) {
 		event.preventDefault();
 
 		console.log('submit button has been clicked');
 		//collecting the user responses
-		allergies = $('#allergies').val().trim();
+		restriction = $('#restriction').val().trim();
 		recipeCount = $('#recipe-count').val();
+		cuisine = $('#cuisine').val().trim();
+		allergies = $('#allergies').val();
 		//adding user responses to local storage
 		localStorage.clear();
 		localStorage.setItem('allergies', allergies);
 		localStorage.setItem('recipe count', recipeCount);
+		localStorage.setItem('cuisine', cuisine);
+		localStorage.setItem('restriction', restriction);
 
 	//collecting restrictions may be tricky if they're multiple choice.
 	//let's talk about what data we want to collect, and how we're collecting it.
 
-		console.log(allergies + ' ' + recipeCount);
+		console.log(allergies + ' ' + recipeCount + ' ' + cuisine);
+
+		callAPI();
+
+// after collecting information, the function will redirect to the swipe page
+		// window.location = 'swipe.html';
 
 	});
 
 recipeCount = parseInt(localStorage.getItem('recipe count'));
 
+// COMPARISON PAGE DIV GENERATION --- make into a function?
 		for (i = 1; i <= recipeCount; i++) {
 			// placeholder images, will be replaced with data from API
-			$('#recipe-comparisons').append('<img src="http://www.sluniverse.com/200.jpg">');
+
+			var compare = $('<div></div>');
+			compare.addClass('col-sm-3 comparison');
+			compare.html('<img src="http://www.sluniverse.com/200.jpg">'); //recipe image
+			compare.append('<h3>Recipe title<h3>') //recipe title
+				.append('<p>serving / cost per serving / preptime</p>') //various stats
+				.append('<ul>ingredients</ul>') //list of ingredients
+				
+			$('#recipe-comparisons').append(compare);
 		}
 	
 
@@ -61,8 +80,8 @@ recipeCount = parseInt(localStorage.getItem('recipe count'));
 	});
 
 	function callAPI () {
-			var URL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?limitLicense=false&" +cuisine+ "&" + restriction + "&" + allergies;
-	console.log(URL);
+			var URL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex?addRecipeInformation=true&cuisine="+ cuisine +"&instructionsRequired=true";
+			   // var URL = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex?addRecipeInformation=true&cuisine=' + cuisine + '&diet='+ restriction + '&fillIngredients=false&intolerances=egg&limitLicense=true&number=10&offset=0&query=burger&ranking=1';
 	$.ajax({
             url: URL,
             type: 'GET',
@@ -75,6 +94,11 @@ recipeCount = parseInt(localStorage.getItem('recipe count'));
             success: function (result) {
               console.log(result);
               console.log(result.results[0].title);
+
+              console.log('recipe ID: ' + result.results[0].id);
+              console.log('image URL: ' + result.results[0].image);
+              console.log('recipie URL: ' + result.results[0].spoonacularSourceUrl);
+              console.log('');
 
                // $("#food-view").text(result[0].name);
             },
