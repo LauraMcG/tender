@@ -197,7 +197,7 @@ $(document).ready(function () {
 	}
 
 	function renderDataToDom(chosenRecipes) {
-		//recipeCount = 3;
+		recipeCount = 3;
 		for (i = 0; i < recipeCount; i++) {
 		// placeholder images, will be replaced with data from API
 			var recipe;
