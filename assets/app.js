@@ -82,7 +82,7 @@ var database = firebase.database();
 //     }
 //     pullIngredients();
 
-recipeCount = 2;
+recipeCount = ;
 
 function comparisonDisplay() {
      for (i = 0; i < recipeCount; i++) {
@@ -95,10 +95,10 @@ function comparisonDisplay() {
             recipe = snapshot.val().resultObject.results[i];
             name = recipe.title;
             image = recipe.image;
-            
-            console.log(name + image);
-        });
 
+            return name;
+        });
+            console.log(name + image);
 
         // pullIngredients(ingredientArray);
         
