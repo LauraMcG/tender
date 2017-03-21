@@ -1,0 +1,27 @@
+.container {
+	width: 940px;
+}
+
+.jumbotron{
+	background-color:  #00ff99;
+}
+
+#recipeImg {
+	height: 200px;
+}
+
+#current-recipe {
+	margin: 10px;
+	display: inline-block;
+	/*margin: auto;*/
+
+}
+
+.swipe-buttons {
+}
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

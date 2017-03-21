@@ -1,4 +1,4 @@
-// GLOBAL VERIABLES //
+// GLOBAL VARIABLES //
 
 var recipeCount;
 var cuisine;
@@ -9,17 +9,16 @@ var ingredientArray = [];
 var recipeName;
 var recipeImg;
 
-//jQuery
+//start jQuery
 $(document).ready(function () {
-	/* start firebase section*/
 
 // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyCNW-ixsg97qolFlHZqdW4V7RbeEY8DxpE",
-    authDomain: "tender-dcacd.firebaseapp.com",
-    databaseURL: "https://tender-dcacd.firebaseio.com",
-    storageBucket: "tender-dcacd.appspot.com",
-    messagingSenderId: "1016777459469"
+	    apiKey: "AIzaSyCNW-ixsg97qolFlHZqdW4V7RbeEY8DxpE",
+	    authDomain: "tender-dcacd.firebaseapp.com",
+	    databaseURL: "https://tender-dcacd.firebaseio.com",
+	    storageBucket: "tender-dcacd.appspot.com",
+	    messagingSenderId: "1016777459469"
   };
 
 firebase.initializeApp(config);
@@ -29,8 +28,7 @@ var database = firebase.database();
 
 // At the initial load, get a snapshot of the current data.
 
-
-	//collecting info when the survey is submitted
+	//collecting info when the survey is submitted -- make into a proper function and not an anonymous function?
 	$('#submit-data').on('click', function(event) {
 		event.preventDefault();
 
@@ -49,10 +47,7 @@ var database = firebase.database();
 		
 		callAPI();
 
-	//collecting restrictions may be tricky if they're multiple choice.
-	//let's talk about what data we want to collect, and how we're collecting it.
-
-		console.log(allergies + ' ' + recipeCount + ' ' + cuisine);
+		// console.log(allergies + ' ' + recipeCount + ' ' + cuisine);
 
 		callAPI();
 
@@ -64,21 +59,90 @@ var database = firebase.database();
 	recipeCount = parseInt(localStorage.getItem('recipe count'));
 
 // COMPARISON PAGE DIV GENERATION --- make into a function?
-		for (i = 1; i <= recipeCount; i++) {
-			// placeholder images, will be replaced with data from API
 
-			var compare = $('<div></div>');
-			compare.addClass('col-sm-3 comparison');
-			compare.html('<img src="http://www.sluniverse.com/200.jpg">'); //recipe image
-			compare.append('<h3>Recipe title<h3>') //recipe title
-				.append('<p>serving / cost per serving / preptime</p>') //various stats
-				.append('<ul>ingredients</ul>') //list of ingredients
+// COPY FROM REALY
+
+// function pullIngredients() {
+//         database.ref().on("value", function(snapshot) {
+//             ingredientArray = [];
+//             var firebaseObject = snapshot.val().resultObject[0];
+//             console.log(firebaseObject);
+//             var numSteps = firebaseObject.analyzedInstructions[0].steps.length;
+//             //console.log(numSteps);
+//             for (i = 0; i < numSteps; i++) {
+//                 console.log(firebaseObject.analyzedInstructions[0].steps[i].step);
+//                 numIngredients = firebaseObject.analyzedInstructions[0].steps[i].ingredients.length;
+//                 for (x = 0; x < numIngredients; x++) {
+//                     ingredient = firebaseObject.analyzedInstructions[0].steps[i].ingredients[x].name;
+//                     ingredientArray.push(ingredient);
+//                 }
+//             }
+//         })
+//         return ingredientArray;
+//     }
+//     pullIngredients();
+
+recipeCount = 2;
+
+function comparisonDisplay() {
+     for (i = 0; i < recipeCount; i++) {
+
+     	 var recipe;
+         var name;
+         var image;
+
+        database.ref().on("value", function(snapshot) {
+            recipe = snapshot.val().resultObject.results[i];
+            name = recipe.title;
+            image = recipe.image;
+            
+            console.log(name + image);
+        });
+
+
+        // pullIngredients(ingredientArray);
+        
+
+           var compare = $('<div></div>');
+            compare.addClass('col-sm-3 comparison');
+            compare.html('<img src="http://www.sluniverse.com/200.jpg">'); //recipe image
+            compare.append('<h3>'+ name + i +'</h3>') //recipe title
+                .append('<p>serving / cost per serving / preptime</p>') //various stats
+                .append('<ul>ingredients</ul>') //list of ingredients
+                
+            $('#recipe-comparisons').append(compare);
+        };
+    };
+
+    comparisonDisplay();
+
+
+
+
+
+
+
+		// for (i = 1; i <= recipeCount; i++) {
+		// 	// placeholder images, will be replaced with data from API
+
+		// 	//pull from firebase each variable 
+
+		// 	var compare = $('<div></div>');
+		// 	compare.addClass('col-sm-3 comparison');
+		// 	compare.html('<img src=" >'); //recipe image
+		// 	compare.append('<h3>Recipe title<h3>') //recipe title
+		// 		.append('<p>serving / cost per serving / preptime</p>') //various stats
+		// 		.append('<ul>ingredients</ul>') //list of ingredients
 				
-			$('#recipe-comparisons').append(compare);
-		}
+		// 	$('#recipe-comparisons').append(compare);
+		// }
 	
 
 //  console.log(localStorage.getItem('allergies'));
+
+
+// SWIPE PAGE //
+
 	$('.no').on('click', function() {
 		
 		console.log('Next recipe image/name would generate / be called from API');
@@ -132,6 +196,8 @@ var database = firebase.database();
 	}
 	swipeDisplay();
 
+
+//API CALL
 	function callAPI () {
 
 			// var URL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex?addRecipeInformation=true&cuisine="+ cuisine +"&instructionsRequired=true";
