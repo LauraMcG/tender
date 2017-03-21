@@ -146,7 +146,7 @@ $(document).ready(function () {
 		console.log(recipeCount);
 		if ( recipeCount === yesCnt)
 		{
-			alert('recipe count hit');
+			window.location.href = 'comparison.html';
 		} 
 
 		
@@ -165,7 +165,7 @@ $(document).ready(function () {
 			recipeImg = snapshot.val().resultObject.results[snapshot.val().count].image;
 
 			$('#recipeName').html(recipeName);
-			$('#recipeImg').attr('src', recipeImg);
+			$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
 		}
 		  
 		 // If any errors are experienced, log them to console.
@@ -194,7 +194,7 @@ $(document).ready(function () {
 			recipeImg = snapshot.val().resultObject.results[snapshot.val().count].image;
 
 			$('#recipeName').html(recipeName);
-			$('#recipeImg').attr('src', recipeImg);
+			$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
 		}
 		  
 		 // If any errors are experienced, log them to console.
@@ -212,7 +212,7 @@ $(document).ready(function () {
 			recipeImg = snapshot.val().resultObject.results[0].image;
 
 			$('#recipeName').html(recipeName);
-			$('#recipeImg').attr('src', recipeImg);
+			$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
 		}
 		  
 		 // If any errors are experienced, log them to console.
