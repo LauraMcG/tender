@@ -221,6 +221,7 @@ $(document).ready(function () {
 		});
 		/* end database section */
 	}
+	
 	swipeDisplay();
 
 
