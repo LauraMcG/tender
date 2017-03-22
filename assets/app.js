@@ -87,9 +87,8 @@ $(document).ready(function () {
 
 	$('.yes').on('click', function(){
 		yesToFirebase();
-
-		
 	});
+
 
 	$('.generate').on('click', function(){
 		//callAPI();
@@ -261,7 +260,7 @@ $(document).ready(function () {
 	}
 
 	function renderDataToDom(chosenRecipes) {
-		recipeCount = 3;
+		//recipeCount = 3;
 		for (i = 0; i < recipeCount; i++) {
 		// placeholder images, will be replaced with data from API
 			var recipe;
@@ -274,7 +273,8 @@ $(document).ready(function () {
 			image = recipe.image;
 			price = recipe.pricePerServing;
 			servings = recipe.servings;
-			console.log(name + ' ' + image + ' ' + price + ' ' + servings);
+			source = recipe.sourceUrl;
+			console.log(name + ' ' + image + ' ' + price + ' ' + servings + ' ' + source);
 		
 			var compare = $('<div></div>');
 
@@ -284,7 +284,11 @@ $(document).ready(function () {
 			compare.append('<p>$' + price + ' per serving</p>');
 			compare.append('<p> Number of servings: ' + servings + '</p>');
 
-			
+			$(compare).on('click', function() {
+				//console.log('you clicked me' + source);
+				window.location.href = source;
+			});
+
 			$('#recipe-comparisons').append(compare);
 		}
 	}
