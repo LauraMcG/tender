@@ -31,30 +31,39 @@
 
 <body>
 	<!-- page header - should be the same for all pages -->
-	<header class="jumbotron container">
-		<h1> Tender </h1>
-		<p id="subtitle"> Find the recipe of your dreams! </p>
+<div class="container-fluid">
+	<header class="jumbotron">
+		<h2> Tender </h2>
+		<p> Find the recipe of your dreams! </p>
 	</header> 
 
 	<div class="row">
-		<div class="container">
 
 		<!-- onclick="recipeNo()" -->
 		
+			<div id="current-recipe" class="col-sm-12">
+				<!-- this space will contain recipe image and name called through API -->
+				<!-- placeholder image / name -->
+				<h3 id="recipeName" class="text-center"></h3>
 
-			<button class="btn btn-danger no"><span class="glyphicon glyphicon-thumbs-down"></span> Ick!</button>
+				<div class="center-block to-compare">
 
-			<h2 id="recipeName"></h2>
-			<!-- this space will contain recipe image and name called through API -->
-			<!-- placeholder image / name -->
-			<div id="current-recipe">			
-				<img src="#" id="recipeImg">
+					<img src="#" id="recipeImg" class="img-responsive center-block">
+
+					<div class="center-block">
+							<button class="btn btn-danger no"><span class="glyphicon glyphicon-thumbs-down"></span> Ick!</button>
+							<button class="btn btn-success yes"><span class="glyphicon glyphicon-thumbs-up"></span> Yum!</button>
+					</div>
+
+
+				</div>
 			</div>
 
-			<button class="btn btn-success yes"><span class="glyphicon glyphicon-thumbs-up"></span> Yum!</button>
-
-		</div>
+			
+	<!-- /row -->
 	</div>
+<!-- container -->
+</div>
 
 
 
