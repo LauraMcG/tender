@@ -1,6 +1,23 @@
-.comparison img {
-	height: 200px;
+<<<<<<< HEAD
+.container {
+	width: 940px;
 }
+
+.jumbotron{
+	background-color:  #00ff99;
+}
+
 #recipeImg {
-	height: 300px;
+	width: 200px;
 }
+
+#current-recipe {
+	margin: 10px;
+	display: inline-block;
+	/*margin: auto;*/
+
+}
+
+
+.comparison img {
+	width: 200px;
