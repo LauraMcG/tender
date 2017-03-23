@@ -1,6 +1,4 @@
-
 // GLOBAL VARIABLES //
-
 var recipeCount;
 var cuisine;
 var restriction;
@@ -14,6 +12,7 @@ var noCnt = 0;
 var yesCnt = 0;
 var choice;
 var choiceArr = [];
+var randomNumObj = {uniqueRandoms: []};
 
 //jQuery
 $(document).ready(function () {
@@ -88,6 +87,7 @@ $(document).ready(function () {
 
 	//API call
 	function callAPI () {
+
 		var URL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex?addRecipeInformation=true&cuisine=" + cuisine + "&diet=" + restriction + "&fillIngredients=false&instructionsRequired=true&intolerances=" + allergies + "&limitLicense=false&number=20&offset=0";
 		// console.log(URL);
 		//ajax call
@@ -107,93 +107,87 @@ $(document).ready(function () {
 				    count: 0,
 				    yesCount: 0,
 				    noCount: 0,
-				    choices:''
+				    choices:'',
+				    randomNum:''
 			    });
 	            //navigate to swipe page after the call
 			    window.location.href = 'swipe.html';
+			    makeUniqueRandom();
             },
             	error: function (error) {
-            }
+            	}
         });
 	};
 
 	//function to handle yes clicks
 	function yesToFirebase() {
-
+		
 		//get snapshot to assign current recipe to choice arrary
 		firebase.database().ref('/').once('value').then(function(snapshot) {
-			if(snapshot.val()) {
-				//update choice in the choice array
-				console.log(choiceArr);
-				choiceArr.push(snapshot.val().resultObject.results[snapshot.val().count]);
-				console.log(choiceArr);
-
-				cnt++;
-				yesCnt++;
-
-				//update database with count data
-				database.ref().update({
-					count: cnt,
-					yesCount: yesCnt,
+			cnt++;
+			yesCnt++;
+			//update choice in choice array
+			choiceArr.push(snapshot.val().resultObject.results[snapshot.val().randomNum]);
+			//update database with count data
+			database.ref().update({
+				count: cnt,
+				yesCount: yesCnt,
+			});
+			//append choice to choices in firebase
+			database.ref().update({
+					choices: choiceArr,			     
 				});
-				//if the ammount of yes clicks match the inital desired recipes to compare, set choices in firebase and move to compare page
-				if ( recipeCount === yesCnt) 
-				{
-					database.ref().update({
-						choices: choiceArr,			     
-					});
-					//go to compare page
-					window.location.href = 'comparison.html';
-					return;
-				} 
-			}
-			
+			//get random number	
+			makeUniqueRandom();
+			//if the ammount of yes clicks match the inital desired recipes to compare, set choices in firebase and move to compare page
+			if ( recipeCount === yesCnt) 
+			{
+				//go to compare page
+				window.location.href = 'comparison.html';
+				return;
+			} 
 			// If any errors are experienced, log them to console.
 			}, function(errorObject) {
 			   		console.log("The read failed: " + errorObject.code);
-		});
-
-		//inc counts
-		
+			   });		
 	}
 
 	//function to handle ick selections
 	function noToFirebase() {
+		//make a new random number to populate next choice
+		makeUniqueRandom();
 		//update counts
 		cnt++;
 		noCnt++;
-
 		//set values in firebase
 		database.ref().update({
 			count: cnt,
 			noCount: noCnt
 		});
-
-		
 	}
 
 	//initial display for swipe page
 	function swipeDisplay() {
-		database.ref().on("value", function(snapshot) {
+		//get the initial random number
+		makeUniqueRandom();
 
+		database.ref().on("value", function(snapshot) {
 		//get initial values from firebase
-		if(snapshot.val()) {
-			recipeName = snapshot.val().resultObject.results[snapshot.val().count].title;
-			recipeImg = snapshot.val().resultObject.results[snapshot.val().count].image;
-			//set IDs with initial picture and name
-			$('#recipeName').html(recipeName);
-			$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
-		}
+			if(snapshot.val()) {
+				recipeName = snapshot.val().resultObject.results[snapshot.val().randomNum].title;
+				recipeImg = snapshot.val().resultObject.results[snapshot.val().randomNum].image;
+				//set IDs with initial picture and name
+				$('#recipeName').html(recipeName);
+				$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
+			}
 		// If any errors are experienced, log them to console.
 		}, function(errorObject) {
-		  console.log("The read failed: " + errorObject.code);
-		});
+		   		console.log("The read failed: " + errorObject.code);
+			});
 		/* end database section */
 	}
-
+	//funciton call to populate swipe page
 	swipeDisplay();
-
-
 
 
 	function comparisonDisplay() {
@@ -206,11 +200,9 @@ $(document).ready(function () {
 		pullIngredients(ingredientArray);
 		recipeCount = 2;
 		if (recipeCount === 2) {
-			
 			$('.1of2').append();
 		}
 	}
-
 
 	function renderDataToDom(chosenRecipes) {
 		//recipeCount = 3;
@@ -251,32 +243,44 @@ $(document).ready(function () {
 
 				console.log(name + ' ' + image + ' ' + price + ' ' + servings + ' ' + source);
 
-			// adding the thumbnail divs
+				// adding the thumbnail divs
 				var compare = $('<div></div>');
 				compare.addClass('col-sm-3');
 				var compareThumb= $('<div></div>');
 				compareThumb.addClass('thumbnail');
 
-
 				compareThumb.html('<img src="' + image + '">'); //recipe image
 				compareThumb.append('<h3>' + name + '</h3>'); //recipe title
 				compareThumb.append('<p> Number of servings: ' + servings + '</p>');
 				compareThumb.append('<p>' + ingredientList + '</p>');
+				compareThumb.append('<a href="' + source + '">');
 
 				//takes user to recipe
-				$(compare).on('click', function() {
-					//console.log('you clicked me' + source);
-					window.location.href = source;
+				$(compare).click(function() {
+				  window.location = $(this).find("a").attr("href"); 
+				  return false;
 				});
-
 				compare.append(compareThumb);
-				
 				$('#recipe-comparisons').append(compare);
-
 			}
-
 		}
 	}
+
+	//function to generate a random number
+	function makeUniqueRandom() {
+		var n = 20;
+	    if (!randomNumObj.uniqueRandoms.length) {
+	        for (var i = 0; i < n; i++) {
+	            randomNumObj.uniqueRandoms.push(i); // generates [1,2,3,4]
+	        }
+	    }
+	    var index = Math.floor(Math.random() * randomNumObj.uniqueRandoms.length),
+	        val = randomNumObj.uniqueRandoms[index];
+	    	randomNumObj.uniqueRandoms.splice(index, 1);
+	    database.ref().update({
+			randomNum: val
+		});
+	}	
 
 	function getSelectRecipeData() {
 		$('recipe-comparisons').html('');
@@ -284,9 +288,8 @@ $(document).ready(function () {
 			var data = snapshot.val().choices;
 			renderDataToDom(data);
 		});
-
 	};
+
 	getSelectRecipeData()
-	//comparisonDisplay();
 //end document ready, end script
 });
