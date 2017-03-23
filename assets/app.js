@@ -24,8 +24,16 @@ $(document).ready(function () {
 	    messagingSenderId: "1016777459469"
 	};
 
+	var testConfig = {
+	    apiKey: "AIzaSyC1Dklm_uM23jwisqSKin-Daz5Uruhwvpk",
+	    authDomain: "tender-test.firebaseapp.com",
+	    databaseURL: "https://tender-test.firebaseio.com",
+	    storageBucket: "tender-test.appspot.com",
+	    messagingSenderId: "669209710942"
+  	};
+
 	//init firebase
-	firebase.initializeApp(config);
+	firebase.initializeApp(testConfig);
 
 	// Create a variable to reference the database
 	var database = firebase.database();
@@ -84,14 +92,6 @@ $(document).ready(function () {
 		yesToFirebase();
 	});
 
-	$('.generate').on('click', function(){
-		recipeName = "Steamed Fish, Chinese Style"
-		recipeImg = 'https://spoonacular.com/recipeImages/steamed-fish-chinese-style-2-98660.png'
-		recipeIngredients = 
-		$('body').append('')
-		$('body').append('<h1> ' + recipeName + '</h1>');
-		$('body').append('<img src="' + recipeImg + '">');
-	});
 
 	//API call
 	function callAPI () {
@@ -126,41 +126,42 @@ $(document).ready(function () {
 
 	//function to handle yes clicks
 	function yesToFirebase() {
-		//inc counts
-		cnt++;
-		yesCnt++;
 		
-		//if the ammount of yes clicks match the inital desired recipes to compare, set choices in firebase and move to compare page
-		if ( recipeCount === yesCnt)
-		{
-			database.ref().update({
-			    choices: choiceArr,			     
-			});
-			//go to compare page
-			window.location.href = 'comparison.html';
-		} 
-		//update database with count data
-		database.ref().update({
-			count: cnt,
-			yesCount: yesCnt,
-			noCount: noCnt
+		//get snapshot to assign current recipe to choice arrary
+		firebase.database().ref('/').once('value').then(function(snapshot) {
+			if(snapshot.val()) {
+				//update choice in the choice array
+				console.log(choiceArr);
+				choiceArr.push(snapshot.val().resultObject.results[snapshot.val().count]);
+				console.log(choiceArr);
+
+				cnt++;
+				yesCnt++;
+
+				//update database with count data
+				database.ref().update({
+					count: cnt,
+					yesCount: yesCnt,
+				});
+				//if the ammount of yes clicks match the inital desired recipes to compare, set choices in firebase and move to compare page
+				if ( recipeCount === yesCnt) 
+				{
+					database.ref().update({
+						choices: choiceArr,			     
+					});
+					//go to compare page
+					window.location.href = 'comparison.html';
+					return;
+				} 
+			}
+			
+			// If any errors are experienced, log them to console.
+			}, function(errorObject) {
+			   		console.log("The read failed: " + errorObject.code);
 		});
-		//get snapshot to assign recipe name, recipe image and the choice
-		database.ref().on("value", function(snapshot) {
-		if(snapshot.val()) {
-			recipeName = snapshot.val().resultObject.results[snapshot.val().count].title;
-			recipeImg = snapshot.val().resultObject.results[snapshot.val().count].image;
-			choice = snapshot.val().resultObject.results[snapshot.val().count];
-			$('#recipeName').html(recipeName);
-			$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
-		}
-		//update choice in the choice array
-		choiceArr.push(snapshot.val().resultObject.results[snapshot.val().count]);
-		  
-		// If any errors are experienced, log them to console.
-		}, function(errorObject) {
-		  console.log("The read failed: " + errorObject.code);
-		});
+
+		//inc counts
+		
 	}
 
 	//function to handle ick selections
@@ -175,20 +176,7 @@ $(document).ready(function () {
 			noCount: noCnt
 		});
 
-		//get snapshot to assign next recipe name, recipe image 
-		database.ref().on("value", function(snapshot) {
-		if(snapshot.val()) {
-			recipeName = snapshot.val().resultObject.results[snapshot.val().count].title;
-			recipeImg = snapshot.val().resultObject.results[snapshot.val().count].image;
-
-			//update the IDs with new name and image
-			$('#recipeName').html(recipeName);
-			$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
-		}
-		// If any errors are experienced, log them to console.
-		}, function(errorObject) {
-		  console.log("The read failed: " + errorObject.code);
-		});
+		
 	}
 
 	//initial display for swipe page
@@ -197,8 +185,8 @@ $(document).ready(function () {
 
 		//get initial values from firebase
 		if(snapshot.val()) {
-			recipeName = snapshot.val().resultObject.results[0].title;
-			recipeImg = snapshot.val().resultObject.results[0].image;
+			recipeName = snapshot.val().resultObject.results[snapshot.val().count].title;
+			recipeImg = snapshot.val().resultObject.results[snapshot.val().count].image;
 			//set IDs with initial picture and name
 			$('#recipeName').html(recipeName);
 			$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
