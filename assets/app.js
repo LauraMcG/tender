@@ -24,16 +24,8 @@ $(document).ready(function () {
 	    messagingSenderId: "1016777459469"
 	};
 
-	var testConfig = {
-	    apiKey: "AIzaSyC1Dklm_uM23jwisqSKin-Daz5Uruhwvpk",
-	    authDomain: "tender-test.firebaseapp.com",
-	    databaseURL: "https://tender-test.firebaseio.com",
-	    storageBucket: "tender-test.appspot.com",
-	    messagingSenderId: "669209710942"
-  	};
-
 	//init firebase
-	firebase.initializeApp(testConfig);
+	firebase.initializeApp(config);
 
 	// Create a variable to reference the database
 	var database = firebase.database();
