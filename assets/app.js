@@ -1,4 +1,5 @@
-// GLOBAL VRIABLES //
+
+// GLOBAL VARIABLES //
 
 var recipeCount;
 var cuisine;
@@ -11,53 +12,55 @@ var recipeImg;
 var cnt = 0;
 var noCnt = 0;
 var yesCnt = 0;
+var choice;
+var choiceArr = [];
 
 //jQuery
 $(document).ready(function () {
-	/* start firebase section*/
-
-	// Initialize Firebase
-	  var config = {
+	// firebase config stuffffff
+	var config = {
 	    apiKey: "AIzaSyCNW-ixsg97qolFlHZqdW4V7RbeEY8DxpE",
 	    authDomain: "tender-dcacd.firebaseapp.com",
 	    databaseURL: "https://tender-dcacd.firebaseio.com",
 	    storageBucket: "tender-dcacd.appspot.com",
 	    messagingSenderId: "1016777459469"
-	  };
+	};
 
+	//init firebase
 	firebase.initializeApp(config);
 
 	// Create a variable to reference the database
 	var database = firebase.database();
 
-	// At the initial load, get a snapshot of the current data.
-
-
 	//collecting info when the survey is submitted
 	$('#submit-data').on('click', function(event) {
+		//dont refresh
 		event.preventDefault();
-
-		console.log('submit button has been clicked');
+		// console.log('submit button has been clicked');
 		//collecting the user responses
+		//if None is selected then set allergies to empty string
 		if ( $('#restriction').val() === 'None' )
 		{
 			restriction = '';
 		}
+		//else just set the value
 		else 
 		{
 			restriction = $('#restriction').val();
 		}
-
+		//if None is selected then set allergies to empty string
 		if ( $('#allergies').val() === 'None' )
 		{
 			allergies = '';
 		}
+		//else just set the value
 		else 
 		{
 			allergies = $('#allergies').val();
 		}
-
+		//pull data for recipe numeber to compare
 		recipeCount = $('#recipe-count').val();
+		//pull data for cuisine choice
 		cuisine = $('#cuisine').val();
 		
 		//adding user responses to local storage
@@ -66,50 +69,28 @@ $(document).ready(function () {
         localStorage.setItem('cuisine', cuisine);
         localStorage.setItem('dietary restrictions', restriction);
         localStorage.setItem('allergies', allergies);
-		// console.log(restriction);
-		// console.log(allergies);
 		
+		//call API function
 		callAPI();
-
-		
-
-
 	});
-
+	//local stufffff
 	recipeCount = parseInt(localStorage.getItem('recipe count'));
 
-	
-
-	//  console.log(localStorage.getItem('allergies'));
+	//clicked NO, do this
 	$('.no').on('click', function() {
 		noToFirebase();
 	});
 
+	//clicked YES, do this
 	$('.yes').on('click', function(){
 		yesToFirebase();
-
-		
 	});
 
-	$('.generate').on('click', function(){
-		//callAPI();
-		recipeName = "Steamed Fish, Chinese Style"
-		recipeImg = 'https://spoonacular.com/recipeImages/steamed-fish-chinese-style-2-98660.png'
-		recipeIngredients = 
-		$('body').append('')
-		$('body').append('<h1> ' + recipeName + '</h1>');
-		$('body').append('<img src="' + recipeImg + '">');
-	});
-
-	
-
-
+	//API call
 	function callAPI () {
-
 		var URL = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex?addRecipeInformation=true&cuisine=" + cuisine + "&diet=" + restriction + "&fillIngredients=false&instructionsRequired=true&intolerances=" + allergies + "&limitLicense=false&number=20&offset=0";
-		
-		console.log(URL);
-		
+		// console.log(URL);
+		//ajax call
 		$.ajax({
             url: URL,
             type: 'GET',
@@ -120,129 +101,100 @@ $(document).ready(function () {
             },
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
-	            // console.log(result);
-
+            	//set initial values in firebase
 	            database.ref().set({
-			      resultObject: result,
-			      count: 0,
-			      yesCount: 0,
-			      noCount: 0,
+				    resultObject: result,
+				    count: 0,
+				    yesCount: 0,
+				    noCount: 0,
+				    choices:''
 			    });
-
+	            //navigate to swipe page after the call
 			    window.location.href = 'swipe.html';
-
-
             },
-            error: function (error) {
-              
+            	error: function (error) {
             }
         });
 	};
 
+	//function to handle yes clicks
 	function yesToFirebase() {
-		cnt++;
-		yesCnt++;
-		console.log(yesCnt);
-		console.log(recipeCount);
-		if ( recipeCount === yesCnt)
-		{
-			window.location.href = 'comparison.html';
-		} 
 
-		
-		// console.log(cnt);
-		// console.log(yesCnt);
+		//get snapshot to assign current recipe to choice arrary
+		firebase.database().ref('/').once('value').then(function(snapshot) {
+			if(snapshot.val()) {
+				//update choice in the choice array
+				console.log(choiceArr);
+				choiceArr.push(snapshot.val().resultObject.results[snapshot.val().count]);
+				console.log(choiceArr);
 
-		database.ref().update({
-			      count: cnt,
-			      yesCount: yesCnt,
-			      noCount: noCnt
-			    });
+				cnt++;
+				yesCnt++;
 
-		database.ref().on("value", function(snapshot) {
-		if(snapshot.val()) {
-			recipeName = snapshot.val().resultObject.results[snapshot.val().count].title;
-			recipeImg = snapshot.val().resultObject.results[snapshot.val().count].image;
-
-			$('#recipeName').html(recipeName);
-			$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
-		}
-		  
-		 // If any errors are experienced, log them to console.
-		}, function(errorObject) {
-		  console.log("The read failed: " + errorObject.code);
+				//update database with count data
+				database.ref().update({
+					count: cnt,
+					yesCount: yesCnt,
+				});
+				//if the ammount of yes clicks match the inital desired recipes to compare, set choices in firebase and move to compare page
+				if ( recipeCount === yesCnt) 
+				{
+					database.ref().update({
+						choices: choiceArr,			     
+					});
+					//go to compare page
+					window.location.href = 'comparison.html';
+					return;
+				} 
+			}
+			
+			// If any errors are experienced, log them to console.
+			}, function(errorObject) {
+			   		console.log("The read failed: " + errorObject.code);
 		});
-		/* end database section */
+
+		//inc counts
+		
 	}
 
-
+	//function to handle ick selections
 	function noToFirebase() {
-	
+		//update counts
 		cnt++;
 		noCnt++;
-		// console.log(cnt);
-		// console.log(noCnt);
 
+		//set values in firebase
 		database.ref().update({
-			      count: cnt,
-			      noCount: noCnt
-			    });
-
-		database.ref().on("value", function(snapshot) {
-		if(snapshot.val()) {
-			recipeName = snapshot.val().resultObject.results[snapshot.val().count].title;
-			recipeImg = snapshot.val().resultObject.results[snapshot.val().count].image;
-
-			$('#recipeName').html(recipeName);
-			$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
-		}
-		  
-		 // If any errors are experienced, log them to console.
-		}, function(errorObject) {
-		  console.log("The read failed: " + errorObject.code);
+			count: cnt,
+			noCount: noCnt
 		});
-		/* end database section */
+
+		
 	}
 
+	//initial display for swipe page
 	function swipeDisplay() {
 		database.ref().on("value", function(snapshot) {
 
+		//get initial values from firebase
 		if(snapshot.val()) {
-			recipeName = snapshot.val().resultObject.results[0].title;
-			recipeImg = snapshot.val().resultObject.results[0].image;
-
+			recipeName = snapshot.val().resultObject.results[snapshot.val().count].title;
+			recipeImg = snapshot.val().resultObject.results[snapshot.val().count].image;
+			//set IDs with initial picture and name
 			$('#recipeName').html(recipeName);
 			$('#recipeImg').attr('src', recipeImg).attr('height','300').attr('width','300');
 		}
-		  
-		 // If any errors are experienced, log them to console.
+		// If any errors are experienced, log them to console.
 		}, function(errorObject) {
 		  console.log("The read failed: " + errorObject.code);
 		});
 		/* end database section */
 	}
+
 	swipeDisplay();
 
 
-	// function pullIngredients() {
-	// 	database.ref().on("value", function(snapshot) {
- //        	ingredientArray = [];
- //        	var firebaseObject = snapshot.val().resultObject;
- //        	//console.log(firebaseObject);
-	//         var numSteps = firebaseObject.analyzedInstructions[0].steps.length;
-	//         //console.log(numSteps);
-	// 	    for (i = 0; i < numSteps; i++) {
-	// 	      	console.log(firebaseObject.analyzedInstructions[0].steps[i].step);
-	// 	      	numIngredients = firebaseObject.analyzedInstructions[0].steps[i].ingredients.length;
-	// 	      	for (x = 0; x < numIngredients; x++) {
-	// 	          	ingredient = firebaseObject.analyzedInstructions[0].steps[i].ingredients[x].name;
-	// 	          	ingredientArray.push(ingredient);
-	// 	      	}
- //      		}
-	// 	})
-	// 	return ingredientArray;
-	// }
-	// pullIngredients();
+
 
 	function comparisonDisplay() {
 		database.ref().on("value", function(snapshot) {
@@ -259,6 +211,7 @@ $(document).ready(function () {
 		}
 	}
 
+
 	function renderDataToDom(chosenRecipes) {
 		//recipeCount = 3;
 		for (i = 0; i < recipeCount; i++) {
@@ -268,35 +221,67 @@ $(document).ready(function () {
 			var image;
 			var price;
 			var servings;
-			recipe = chosenRecipes.results[i];
-			name = recipe.title;
-			image = recipe.image;
-			price = recipe.pricePerServing;
-			servings = recipe.servings;
-			console.log(name + ' ' + image + ' ' + price + ' ' + servings);
-		
-		//new code for adding the thumbnail divs
-			var compare = $('<div></div>');
-			compare.addClass('col-sm-3');
-			var compareThumb= $('<div></div>');
-			compareThumb.addClass('thumbnail');
+			ingredientArray = [];
+			ingredientsArray = [];
+			recipe = chosenRecipes[i];
+
+			if (recipe) {
+				var recipeSteps = recipe.analyzedInstructions[0].steps;
+				var numSteps = recipeSteps.length;
+				for (y = 0; y < numSteps; y++) {
+			      	//console.log(firebaseObject.analyzedInstructions[0].steps[i].step);
+			      	if (recipe.analyzedInstructions[0].steps[y].ingredients) {
+				      	var numIngredients = recipe.analyzedInstructions[0].steps[y].ingredients;
+				      	var test = numIngredients.length;
+				      	for (x = 0; x < test; x++) {
+				          	var ingredient = recipe.analyzedInstructions[0].steps[y].ingredients[x].name;
+				          	ingredientArray.push(ingredient);
+				      	}
+			      	}
+	      		}
+
+				name = recipe.title;
+				image = recipe.image;
+				servings = recipe.servings;
+				source = recipe.sourceUrl;
+				var ingredientList = '';
+				for (z = 0; z < ingredientArray.length; z++) {
+					ingredientList = ingredientList + '- ' + ingredientArray[z] + '<br>';
+				} 
+
+				console.log(name + ' ' + image + ' ' + price + ' ' + servings + ' ' + source);
+
+			// adding the thumbnail divs
+				var compare = $('<div></div>');
+				compare.addClass('col-sm-3');
+				var compareThumb= $('<div></div>');
+				compareThumb.addClass('thumbnail');
 
 
-			compareThumb.html('<img src="' + image + '">'); //recipe image
-			compareThumb.append('<h3>' + name + '</h3>'); //recipe title
-			compareThumb.append('<p>$' + price + ' per serving</p>');
-			compareThumb.append('<p> Number of servings: ' + servings + '</p>');
+				compareThumb.html('<img src="' + image + '">'); //recipe image
+				compareThumb.append('<h3>' + name + '</h3>'); //recipe title
+				compareThumb.append('<p> Number of servings: ' + servings + '</p>');
+				compareThumb.append('<p>' + ingredientList + '</p>');
 
-			compare.append(compareThumb);
-			
-			$('#recipe-comparisons').append(compare);
+				//takes user to recipe
+				$(compare).on('click', function() {
+					//console.log('you clicked me' + source);
+					window.location.href = source;
+				});
+
+				compare.append(compareThumb);
+				
+				$('#recipe-comparisons').append(compare);
+
+			}
+
 		}
 	}
 
 	function getSelectRecipeData() {
 		$('recipe-comparisons').html('');
 		firebase.database().ref('/').once('value').then(function(snapshot) {
-			var data = snapshot.val().resultObject;
+			var data = snapshot.val().choices;
 			renderDataToDom(data);
 		});
 

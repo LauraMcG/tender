@@ -1,8 +1,4 @@
 
-.container {
-	width: 940px;
-}
-
 .jumbotron{
 	background-color: white;
 	color: #04CE86;
@@ -57,7 +53,22 @@
 	color: #666;
 }
 
+#recipe-comparisons {
+	padding-top: 10px;
+}
+
+
 
 /*.thumbnail img {
 	width: 95%;
 }*/
+
+.comparison img {
+	width: 200px;
+	height: 200px;
+}
+
+.thumbnail:hover {
+	box-shadow: 1px 1px 3px #04CE86;
+}
+
