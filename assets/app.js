@@ -1,4 +1,4 @@
-// GLOBAL VERIABLES //
+// GLOBAL VRIABLES //
 
 var recipeCount;
 var cuisine;
@@ -275,14 +275,19 @@ $(document).ready(function () {
 			servings = recipe.servings;
 			console.log(name + ' ' + image + ' ' + price + ' ' + servings);
 		
+		//new code for adding the thumbnail divs
 			var compare = $('<div></div>');
+			compare.addClass('col-sm-3');
+			var compareThumb= $('<div></div>');
+			compareThumb.addClass('thumbnail');
 
-			compare.addClass('col-sm-3 comparison');
-			compare.html('<img src="' + image + '">'); //recipe image
-			compare.append('<h3>' + name + '</h3>'); //recipe title
-			compare.append('<p>$' + price + ' per serving</p>');
-			compare.append('<p> Number of servings: ' + servings + '</p>');
 
+			compareThumb.html('<img src="' + image + '">'); //recipe image
+			compareThumb.append('<h3>' + name + '</h3>'); //recipe title
+			compareThumb.append('<p>$' + price + ' per serving</p>');
+			compareThumb.append('<p> Number of servings: ' + servings + '</p>');
+
+			compare.append(compareThumb);
 			
 			$('#recipe-comparisons').append(compare);
 		}

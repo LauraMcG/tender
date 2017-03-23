@@ -17,6 +17,8 @@
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- Link to css -->
 <link rel="stylesheet" type="text/css" href="assets/style.css">
+<!-- linking fonts from Google -->
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
  
 <!-- Link to JQuery -->
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
@@ -34,110 +36,113 @@
     <div class="row">
 
         <div class="jumbotron">
-        <h1>Tender</h1>
+        <h1>Welcome to Tender, sugar</h1>
         <h3>Before we find the recipe of your dreams, I want to get to know you better.</h3>
         </div>
         <!-- start survey -->
-        <form class="form-horizontal">
 
-        <!-- number of recipes to select -->
-          <div class="form-group">
-            <label for="recipe-count" class="col-sm-3 control-label">How many recipes?</label>
-            <div class="col-sm-9">
-              <select class="form-control" id="recipe-count">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-              </select>
+        <div class="survey">
+          <form class="form-horizontal">
+
+          <!-- number of recipes to select -->
+            <div class="form-group">
+              <label for="recipe-count" class="col-sm-3 control-label">How many recipes?</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="recipe-count">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <!-- cuisine : checkboxes later -->
+            <!-- cuisine : checkboxes later -->
 
-          <div class="form-group">
-            <label for="cuisine" class="col-sm-3 control-label">What kind of cuisine?</label>
-            <div class="col-sm-9">
-              <select class="form-control" id="cuisine">
-                  <!-- <option></option> -->
-                  <option>African</option>
-                  <option>American</option>
-                  <option>British</option>
-                  <option>Cajun</option>
-                  <option>Chinese</option>
-                  <option>Caribbean</option>
-                  <option>Eastern European</option>
-                  <option>French</option>
-                  <option>German</option>
-                  <option>Greek</option>
-                  <option>Indian</option>
-                  <option>Irish</option>
-                  <option>Italian</option>
-                  <option>Japanese</option>
-                  <option>Jewish</option>
-                  <option>Korean</option>
-                  <option>Latin American</option>
-                  <option>Mexican</option>
-                  <option>Middle Eastern</option>
-                  <option>Nordic</option>
-                  <option>Southern</option>
-                  <option>Spanish</option>
-                  <option>Thai</option>
-                  <option>Vietnamese</option>
-              </select>
+            <div class="form-group">
+              <label for="cuisine" class="col-sm-3 control-label">What kind of cuisine?</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="cuisine">
+                    <!-- <option></option> -->
+                    <option>African</option>
+                    <option>American</option>
+                    <option>British</option>
+                    <option>Cajun</option>
+                    <option>Chinese</option>
+                    <option>Caribbean</option>
+                    <option>Eastern European</option>
+                    <option>French</option>
+                    <option>German</option>
+                    <option>Greek</option>
+                    <option>Indian</option>
+                    <option>Irish</option>
+                    <option>Italian</option>
+                    <option>Japanese</option>
+                    <option>Jewish</option>
+                    <option>Korean</option>
+                    <option>Latin American</option>
+                    <option>Mexican</option>
+                    <option>Middle Eastern</option>
+                    <option>Nordic</option>
+                    <option>Southern</option>
+                    <option>Spanish</option>
+                    <option>Thai</option>
+                    <option>Vietnamese</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <!-- dietary restrictions -->
+            <!-- dietary restrictions -->
 
-          <div class="form-group">
-            <label for="restriction" class="col-sm-3 control-label">Any restrictions?</label>
-            <div class="col-sm-9">
-              <select class="form-control" id="restriction">
-                  <!-- <option></option> -->
-                  <option>None</option>
-                  <option>Pescetarian</option>
-                  <option>Lactovegetarian</option>
-                  <option>Ovovegetarian</option>
-                  <option>Vegan</option>
-                  <option>Vegetarian</option>
-              </select>
+            <div class="form-group">
+              <label for="restriction" class="col-sm-3 control-label">Any restrictions?</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="restriction">
+                    <!-- <option></option> -->
+                    <option>None</option>
+                    <option>Pescetarian</option>
+                    <option>Lactovegetarian</option>
+                    <option>Ovovegetarian</option>
+                    <option>Vegan</option>
+                    <option>Vegetarian</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <!-- allergies -->
-          <div class="form-group">
-            <label for="allergies" class="col-sm-3 control-label">What about allergies?</label>
-            <div class="col-sm-9">
-              <select class="form-control" id="allergies">
-                  <!-- <option></option> -->
-                  <option>None</option>
-                  <option>Dairy</option>
-                  <option>Egg</option>
-                  <option>Gluten</option>
-                  <option>Peanut</option>
-                  <option>Sesame</option>
-                  <option>Seafood</option>
-                  <option>Shellfish</option>
-                  <option>Soy</option>
-                  <option>Sulfite</option>
-                  <option>Treenut</option>
-                  <option>Wheat</option>
-              </select>
+            <!-- allergies -->
+            <div class="form-group">
+              <label for="allergies" class="col-sm-3 control-label">What about allergies?</label>
+              <div class="col-sm-8">
+                <select class="form-control" id="allergies">
+                    <!-- <option></option> -->
+                    <option>None</option>
+                    <option>Dairy</option>
+                    <option>Egg</option>
+                    <option>Gluten</option>
+                    <option>Peanut</option>
+                    <option>Sesame</option>
+                    <option>Seafood</option>
+                    <option>Shellfish</option>
+                    <option>Soy</option>
+                    <option>Sulfite</option>
+                    <option>Treenut</option>
+                    <option>Wheat</option>
+                </select>
+              </div>
             </div>
-          </div>
 
 
-        <!-- submit button -->
-        <!-- -->
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-default" id="submit-data" >Let's eat!</button>
+          <!-- submit button -->
+          <!-- -->
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit" class="btn btn-info" id="submit-data" >Let's eat!</button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
 
-
+    <!-- /survey -->
+    </div>
     <!-- /main row div -->
     </div>
 

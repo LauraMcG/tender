@@ -17,6 +17,9 @@
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- Link to css -->
 <link rel="stylesheet" type="text/css" href="assets/style.css">
+<!-- linking fonts from Google -->
+<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+
  
 <!-- Link to JQuery -->
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
@@ -31,33 +34,36 @@
 
 <body>
 	<!-- page header - should be the same for all pages -->
-<div class="container-fluid">
-	<header class="jumbotron">
-		<h2> Tender </h2>
+<div class="container">
+	<div class="jumbotron">
+		<h1> Tender </h1>
 		<p> Find the recipe of your dreams! </p>
-	</header> 
+	</div> 
 
 	<div class="row">
 
 		<!-- onclick="recipeNo()" -->
-		
-			<div id="current-recipe" class="col-sm-12">
+			<div class="col-sm-3"></div>
+			<div id="current-recipe" class="col-sm-6">
 				<!-- this space will contain recipe image and name called through API -->
 				<!-- placeholder image / name -->
-				<h3 id="recipeName" class="text-center"></h3>
+				<div class="swipe-title"><h2 id="recipeName" class="text-center">placeholder title</h2></div>
 
-				<div class="center-block to-compare">
 
-					<img src="#" id="recipeImg" class="img-responsive center-block">
+				<div class="to-compare">
 
-					<div class="center-block">
-							<button class="btn btn-danger no"><span class="glyphicon glyphicon-thumbs-down"></span> Ick!</button>
-							<button class="btn btn-success yes"><span class="glyphicon glyphicon-thumbs-up"></span> Yum!</button>
+					<img src="http://placehold.it/300x300" id="recipeImg" class="img-responsive center-block">
+
+					<div class="select-buttons text-center">
+							<button class="btn btn-lg btn-danger no"><span class="glyphicon glyphicon-thumbs-down"></span> Yuck!</button>
+							<button class="btn btn-lg btn-success yes"><span class="glyphicon glyphicon-thumbs-up"></span> Yum!</button>
 					</div>
+					
 
 
 				</div>
 			</div>
+			<div class="col-sm-3"></div>
 
 			
 	<!-- /row -->

@@ -1,23 +1,63 @@
-<<<<<<< HEAD
+
 .container {
 	width: 940px;
 }
 
 .jumbotron{
-	background-color:  #00ff99;
+	background-color: white;
+	color: #04CE86;
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Righteous', cursive;
+}
+
+/*INDEX PAGE*/
+.survey {
+	margin-top: 20px;
+}
+
+
+/*SPECIFC TO SWIPE PAGE*/
+
+#current-recipe {
+	padding-top: 8px;
+	border-radius: 5px;
+	box-shadow: 2px 2px 3px #ccc;
+}
+
+#recipeName,
+.thumbnail h3  {
+	margin-top: 10px;
+	font-weight: bolder;
+	color: #FF6441;
 }
 
 #recipeImg {
-	width: 200px;
+	width: 300px;
 }
 
-#current-recipe {
-	margin: 10px;
-	display: inline-block;
-	/*margin: auto;*/
-
+.btn {
+	margin: 20px;
 }
 
 
-.comparison img {
-	width: 200px;
+#current-recipe,
+.comparison {
+	border-width: 1px;
+	border-color: #ccc;
+	border-style: solid;
+	margin: 1px;
+}
+
+/*SPECIFIC TO COMPARISON PAGE*/
+
+.thumbnail {
+	padding: 10px;
+	box-shadow: 1px 1px 3px #ccc;
+	color: #666;
+}
+
+
+/*.thumbnail img {
+	width: 95%;
+}*/
