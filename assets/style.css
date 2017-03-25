@@ -1,10 +1,30 @@
+/*BACKGROUND AND HEADER*/
 
-.jumbotron{
-	background-color: white;
+body {
+	background-image: url("grid_noise_2X.png");
+}
+
+.page-header {
+	background-color: #fff;
+	padding: 15px;
+	width: 100%;
+	margin: -1px 0 20px;
+	border-bottom: 3px solid #6BEBBD;
+}
+
+h1{
 	color: #04CE86;
 	margin: 0px;
 	padding: 0px;
 	font-family: 'Righteous', cursive;
+	font-size: 42px;
+}
+
+ .page-header h3,
+ h1 small {
+	font-family: 'Righteous', cursive;
+	color: #999;
+	font-size: 24px;
 }
 
 /*INDEX PAGE*/
@@ -12,31 +32,53 @@
 	margin-top: 20px;
 }
 
+.control-label {
+	font-family: 'Dosis', sans-serif;
+	font-size: 18px;
+}
 
-/*SPECIFC TO SWIPE PAGE*/
 
+/*SWIPE PAGE*/
 #current-recipe {
+	background-color: #fff;
 	padding-top: 8px;
 	border-radius: 5px;
-	box-shadow: 2px 2px 3px #ccc;
+	box-shadow: 3px 3px 0px #ccc;
 }
 
 #recipeName,
 .thumbnail h3  {
 	margin-top: 10px;
-	font-weight: bolder;
+	font-weight: bold;
 	color: #FF6441;
+	font-family: 'Dosis', sans-serif;
 }
 
 #recipeImg {
-	width: 300px;
+	width: 350px;
+	padding: 15px;
 }
 
+/*BUTTON STYLING*/
 .btn {
-	margin: 20px;
+	margin: 0px 20px 20px 20px;
+	font-family: 'Dosis', sans-serif;
 }
 
+.round {
+	border-radius: 24px;
+}
 
+.btn-danger {
+	background-color: #FF6441;
+
+}
+
+.btn-success {
+	background-color: #04CE86;
+}
+
+/*POLARIOD*/
 #current-recipe,
 .comparison {
 	border-width: 1px;
@@ -49,7 +91,7 @@
 
 .thumbnail {
 	padding: 10px;
-	box-shadow: 1px 1px 3px #ccc;
+	box-shadow: 2px 2px 0px #ccc;
 	color: #666;
 }
 
@@ -57,18 +99,14 @@
 	padding-top: 10px;
 }
 
-
-
-/*.thumbnail img {
-	width: 95%;
-}*/
-
 .comparison img {
 	width: 200px;
 	height: 200px;
 }
 
 .thumbnail:hover {
-	box-shadow: 1px 1px 3px #04CE86;
+	box-shadow: 2px 2px 0px #04CE86;
+	color: #04CE86;
+
 }
 

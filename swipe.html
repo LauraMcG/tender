@@ -18,7 +18,7 @@
 <!-- Link to css -->
 <link rel="stylesheet" type="text/css" href="assets/style.css">
 <!-- linking fonts from Google -->
-<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Dosis|Righteous" rel="stylesheet">
 
  
 <!-- Link to JQuery -->
@@ -34,11 +34,15 @@
 
 <body>
 	<!-- page header - should be the same for all pages -->
-<div class="container">
-	<div class="jumbotron">
-		<h1> Tender </h1>
-		<p> Find the recipe of your dreams! </p>
-	</div> 
+<div class="container-fluid">
+
+    <div class="row">
+      <div class="page-header">
+          <div class="col-sm-offset-3 ">
+            <h1> Tender <small>Find the recipe of your dreams!</small> </h1>
+          </div>
+      </div>
+    </div>
 
 	<div class="row">
 
@@ -47,16 +51,16 @@
 			<div id="current-recipe" class="col-sm-6">
 				<!-- this space will contain recipe image and name called through API -->
 				<!-- placeholder image / name -->
-				<div class="swipe-title"><h2 id="recipeName" class="text-center">placeholder title</h2></div>
+				<div class="swipe-title"><h3 id="recipeName" class="text-center"></h3></div>
 
 
 				<div class="to-compare">
 
-					<img src="http://placehold.it/300x300" id="recipeImg" class="img-responsive center-block">
+					<img src="#" id="recipeImg" class="img-responsive center-block">
 
 					<div class="select-buttons text-center">
-							<button class="btn btn-lg btn-danger no"><span class="glyphicon glyphicon-thumbs-down"></span> Yuck!</button>
-							<button class="btn btn-lg btn-success yes"><span class="glyphicon glyphicon-thumbs-up"></span> Yum!</button>
+							<button class="btn btn-lg btn-danger round no"><span class="glyphicon glyphicon-thumbs-down"></span> Yuck!</button>
+							<button class="btn btn-lg btn-success round yes"><span class="glyphicon glyphicon-thumbs-up"></span> Yum!</button>
 					</div>
 					
 

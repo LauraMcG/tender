@@ -18,7 +18,7 @@
 <!-- Link to css -->
 <link rel="stylesheet" type="text/css" href="assets/style.css">
 <!-- linking fonts from Google -->
-<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Dosis|Righteous" rel="stylesheet">
  
 <!-- Link to JQuery -->
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
@@ -32,15 +32,20 @@
 </head>
 
 <body>
-<div class= "container">
+<div class= "container-fluid">
     <div class="row">
+      <div class="page-header">
+          <div class="col-sm-offset-3 ">
+            <h1>Welcome to Tender, sugar.</h1>
+            <h3>Before we find your perfect meal, I want to get to know you better.</h3>
+          </div>
+      </div>
+    </div>
 
-        <div class="jumbotron">
-        <h1>Welcome to Tender, sugar</h1>
-        <h3>Before we find the recipe of your dreams, I want to get to know you better.</h3>
-        </div>
         <!-- start survey -->
 
+
+      <div class="row">
         <div class="survey">
           <form class="form-horizontal">
 
@@ -136,7 +141,7 @@
           <!-- -->
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-9">
-                <button type="submit" class="btn btn-info" id="submit-data" >Let's eat!</button>
+                <button type="submit" class="btn btn-lg btn-info round" id="submit-data" >Let's eat!</button>
               </div>
             </div>
           </form>
