@@ -213,30 +213,40 @@ $(document).ready(function () {
 			var image;
 			var price;
 			var servings;
+			 // clears out arrays for each new recipe
 			ingredientArray = [];
 			ingredientsArray = [];
+			 // sets choices from Firebase to recipe variable
 			recipe = chosenRecipes[i];
-
+			 // Code will only run if recipe exists (which is pretty much always should)
 			if (recipe) {
+				 // stores steps array from current recipe choice in loop to recipeSteps variable
 				var recipeSteps = recipe.analyzedInstructions[0].steps;
+				 // stores lengths of steps array into numSteps variable
 				var numSteps = recipeSteps.length;
+				// runs through each step and each ingredient to build ingredientArray
 				for (y = 0; y < numSteps; y++) {
-			      	//console.log(firebaseObject.analyzedInstructions[0].steps[i].step);
+			     	// code will only run if ingredients array exists in the step  	
 			      	if (recipe.analyzedInstructions[0].steps[y].ingredients) {
+			      		 // stores ingredients array from current recipe current step into numIngredients variable
 				      	var numIngredients = recipe.analyzedInstructions[0].steps[y].ingredients;
+				      	 // store length of numIngredients array into ingredientsLength
 				      	var test = numIngredients.length;
 				      	for (x = 0; x < test; x++) {
+				      		 // stores ingredient name into ingredient variable
 				          	var ingredient = recipe.analyzedInstructions[0].steps[y].ingredients[x].name;
+				          	 // pushes ingredient into ingredientArray
 				          	ingredientArray.push(ingredient);
 				      	}
 			      	}
 	      		}
-
+	      		// store name, image, servings, and source variables from current recipe
 				name = recipe.title;
 				image = recipe.image;
 				servings = recipe.servings;
 				source = recipe.sourceUrl;
 				var ingredientList = '';
+				// for each ingredient in ingredientArray, add dashes and breaks and append into ingredientList variable
 				for (z = 0; z < ingredientArray.length; z++) {
 					ingredientList = ingredientList + '- ' + ingredientArray[z] + '<br>';
 				} 
